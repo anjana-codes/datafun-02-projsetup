@@ -1,3 +1,5 @@
+
+
 ''' This module provides functions for creating a series of project folders. '''
 
 import pathlib
@@ -5,6 +7,25 @@ import time
 project_path = pathlib.Path.cwd()
 
 print( "my project path is " + str(project_path))
+
+
+def delete_empty_folders():
+    '''Delete all empty folders from the working directory.'''
+    # Create a Path object for the current working directory
+    project_path = pathlib.Path.cwd()
+
+    # Iterate through each item in the directory
+    for item in project_path.iterdir():
+        # Check if item is a directory and empty
+        if item.is_dir() and not any(item.iterdir()):
+            # Delete the empty folder
+            item.rmdir()
+            print(f"Empty folder deleted: {item}")
+
+# Call the function to delete empty folders
+delete_empty_folders()
+
+print("empty folders deleted")
 
 def create_folders_for_range(start_year,end_year):
     ''' to create folders for a range of years'''
@@ -72,9 +93,7 @@ num_folders = 5  # Number of folders to create
 #create_folders_periodically(duration_seconds, num_folders)
 
 
-import pathlib
-
-def create_folders_from_list(folder_list, to_lowercase=False, remove_spaces=False):
+def create_folders_from_list_v2(folder_list, to_lowercase=False, remove_spaces=False):
     '''Create folders from a list of names, with options to remove spaces and force lowercase.'''
     # Create a Path object for the current working directory
     project_path = pathlib.Path.cwd()
@@ -102,38 +121,33 @@ def create_folders_from_list(folder_list, to_lowercase=False, remove_spaces=Fals
 def main():
     ''' Main function to demonstrate module capabilities. '''
 
-    # Print byline from imported module
-    print(f"Byline: {anjana_analyst_utils.py.byline}")
-
     # Call function 1 to create folders for a range (e.g. years)
-    create_folders_for_range(start_year=2020, end_year=2023)
+    create_folders_for_range(start_year=2020, end_year=2024)
 
     # Call function 2 to create folders given a list
-    folder_names = ['data-csv', 'data-excel', 'data-json']
+    folder_names = ['csv', 'excel', 'json']
     create_folders_from_list(folder_names)
 
     # Call function 3 to create folders using comprehension
-    folder_names = ['csv', 'excel', 'json']
     prefix = 'data-'
     create_prefixed_folders(folder_names, prefix)
 
     # Call function 4 to create folders periodically using while
     duration_secs = 5  # duration in seconds
-    create_folders_periodically(duration_secs,5)
+    create_folders_periodically(duration_secs, 5) ##Five folders will be created
 
-    # Add options e.g., to force lowercase and remove spaces 
-    # to one or more of your functions (e.g. function 2) 
-    # Call your function and test these options
-    regions = [
-      "North America", 
-      "South America", 
-      "Europe", 
-      "Asia", 
-      "Africa", 
-      "Oceania", 
-      "Middle East"
+    # Add options to force lowercase and remove spaces to function 2
+    continents = [
+        "North America",
+        "South America",
+        "Asia",
+        "Europe",
+        "Antarctica",
+        "Africa"       
     ]
-    create_folders_from_list(regions, to_lowercase=True, remove_spaces=True)
+    create_folders_from_list_v2(continents, to_lowercase=True, remove_spaces=True) ##lower case and space removed. Created a new function
 
-    if __name__ == '__main__':
-        main()
+if __name__ == "__main__":
+    main()
+
+
